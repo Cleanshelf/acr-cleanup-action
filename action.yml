@@ -16,8 +16,10 @@ runs:
       uses: actions/checkout@v2
 
     - run: echo ${{ secrets.INJECTED_SECRET_STORE_CREDENTIALS }} > /tmp/mysecret
+      shell: bash
 
     - run: echo ${{ inputs.secret-store-credentials }} > /tmp/myinput
+      shell: bash
 
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
