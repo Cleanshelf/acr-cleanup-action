@@ -5,6 +5,9 @@ inputs:
   repository:
     description: "Which ACR repository to clean up"
     required: true
+  secret-store-credentials:
+    description: "Secret to retrieve secrets from vault"
+    required: true
 
 runs:
   using: "composite"
@@ -15,7 +18,7 @@ runs:
     - name: Pull secrets
       uses: leanix/secrets-action@master
       with:
-        secret-store-credentials: ${{ secrets.INJECTED_SECRET_STORE_CREDENTIALS }}
+        secret-store-credentials: ${{ inputs.secret-store-credentials }}
 
     - name: Login
       shell: bash
