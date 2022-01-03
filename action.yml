@@ -1,0 +1,26 @@
+name: Clean up Docker images
+description: "Clean up stale Docker images from Azure Container Registry"
+
+inputs:
+  repository:
+    description: "Which ACR repository to clean up"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pull secrets
+      uses: leanix/secrets-action@master
+      with:
+        secret-store-credentials: ${{ secrets.INJECTED_SECRET_STORE_CREDENTIALS }}
+
+    - name: Login
+      shell: bash
+      run: az login --service-principal --username ${{ env.ARM_CLIENT_ID }} --password ${{ env.ARM_CLIENT_SECRET}} --tenant ${{ env.ARM_TENANT_ID }}
+
+    - name: Clean up repository
+      shell: bash
+      run: ${{ github.action_path }}/clean_up_docker_repo.sh  ${{ inputs.repository }}
