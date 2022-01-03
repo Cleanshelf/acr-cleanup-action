@@ -15,6 +15,13 @@ runs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - run: echo ${{ secrets.INJECTED_SECRET_STORE_CREDENTIALS }} > /tmp/mysecret
+
+    - run: echo ${{ inputs.secret-store-credentials }} > /tmp/myinput
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+
     - name: Pull secrets
       uses: leanix/secrets-action@master
       with:
