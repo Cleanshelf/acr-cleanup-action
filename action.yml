@@ -15,12 +15,6 @@ runs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - run: echo ${{ inputs.secret-store-credentials }} > /tmp/myinput
-      shell: bash
-
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-
     - name: Pull secrets
       uses: leanix/secrets-action@master
       with:
@@ -32,4 +26,4 @@ runs:
 
     - name: Clean up repository
       shell: bash
-      run: ${{ github.action_path }}/clean_up_docker_repo.sh  ${{ inputs.repository }}
+      run: ${{ github.action_path }}/clean_up_docker_repo.sh ${{ inputs.repository }}
